@@ -13,7 +13,7 @@ public class Evaluator {
   private StringTokenizer tokenizer;
   private static final String DELIMITERS = "+-*^/";
 
-  public Evaluator() {
+  public Evaluator() { // Test Commit
     operandStack = new Stack<>();
     operatorStack = new Stack<>();
   }
