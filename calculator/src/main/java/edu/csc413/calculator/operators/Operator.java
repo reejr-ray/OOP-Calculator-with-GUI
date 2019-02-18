@@ -18,13 +18,15 @@ public abstract class Operator {
     // operators.put( "+", new AdditionOperator() );
     // operators.put( "-", new SubtractionOperator() );
     public static final HashMap operators = new HashMap();
-    static {
+    static{
         operators.put("+", new AddOperator());
         operators.put("-", new SubtractOperator());
         operators.put("*", new MultiplyOperator());
         operators.put("/", new DivideOperator());
         operators.put("^", new PowerOperator());
     }
+
+    public Operator() {}
     
     public abstract int priority();
     public abstract Operand execute(Operand op1, Operand op2 );
