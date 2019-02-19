@@ -44,14 +44,25 @@ public class Evaluator {
             throw new RuntimeException("*****invalid token******");
           }
 
-
           // TODO Operator is abstract - these two lines will need to be fixed:
           // The Operator class should contain an instance of a HashMap,
           // and values will be instances of the Operators.  See Operator class
           // skeleton for an example.
-          Operator newOperator = new Operator();
+          String inside = token; // ???? Why do I need this to not get the error:
+          // local variables referenced from an inner class must be final or effectively final
+          Operator newOperator = new Operator() {
+            @Override
+            public int priority() {
+              return Operator.getOperator(inside).priority();
+            }
+
+            @Override
+            public Operand execute(Operand op1, Operand op2) {
+              return Operator.getOperator(inside).execute(op1,op2);
+            }
+          };
           
-          while (operatorStack.peek().priority() >= newOperator.priority() ) {
+          while (!operatorStack.empty() && operatorStack.peek().priority() >= newOperator.priority() ) {
             // note that when we eval the expression 1 - 2 we will
             // push the 1 then the 2 and then do the subtraction operation
             // This means that the first number to be popped is the
@@ -78,7 +89,14 @@ public class Evaluator {
     // evaluating the operator stack until it only contains the init operator;
     // Suggestion: create a method that takes an operator as argument and
     // then executes the while loop.
-    
-    return 0;
+    while(!operatorStack.isEmpty()){
+      /* Init operator is not needed. just check to see that operand stack is not empty before you pull. */
+      Operand oprand2 = operandStack.pop();
+      Operator oprat = operatorStack.pop();
+      Operand oprand1 = operandStack.pop();
+      operandStack.push( oprat.execute( oprand1, oprand2 ));
+    }
+
+    return operandStack.pop().getValue();
   }
 }

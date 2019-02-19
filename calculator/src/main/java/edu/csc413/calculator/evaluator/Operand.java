@@ -6,27 +6,37 @@ package edu.csc413.calculator.evaluator;
 public class Operand {
   /**
   * construct operand from string token.
-  */  
+  */
+  int value;
   public Operand( String token ) {
-    
+    value = Integer.valueOf(token);
   }
   /**
    * construct operand from integer
    */
   public Operand( int value ) {
-    
+    this.value = value;
   }
   /**
    * return value of opernad
    */
   public int getValue() {
-      return 0;
+      return value;
   }
   /**
    * Check to see if given token is a valid
    * operand.
    */
   public static boolean check( String token ) {
-    return false;
+    /* Using the Integer.parseInt(str) method, it will throw a NumberFormatException(seen below) if the str does not
+     * contain a parsable integer. I catch that and return false if the exception is thrown.
+     */
+    try{
+      Integer.parseInt(token);
+      return true;
+    }
+    catch(NumberFormatException e){
+      return false;
+    }
   }
 }
